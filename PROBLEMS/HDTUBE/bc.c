@@ -8,8 +8,8 @@ gdet_bc=get_g(g,3,4,ix,iy,iz);
 gdet_src=get_g(g,3,4,iix,iiy,iiz);
 ldouble gg[4][5],ggsrc[4][5],eup[4][4],elo[4][4];
 pick_g(ix,iy,iz,gg);
-pick_T(emuup,ix,iy,iz,eup);
-pick_T(emulo,ix,iy,iz,elo);
+//pick_T(emuup,ix,iy,iz,eup);
+//pick_T(emulo,ix,iy,iz,elo);
 ldouble xx=get_x(ix,0);
 
 /**********************/

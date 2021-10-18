@@ -2,28 +2,30 @@
 
 ifneq ($(SERIAL),1)
 CC=mpicc 
-CFLAGS=-O3 -DMPI
+CFLAGS=-O3 -DMPI -DNOSILO -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib
+
 
 else
-//CC=gcc
-//CFLAGS=-O2 -Wno-unused-result -fopenmp
-//-fsanitize=address -g -fno-omit-frame-pointer -Wunused-function 
+CC=gcc
+CFLAGS=-O3 -fopenmp -Wno-unused-result -fopenmp -fsanitize=address -g -fno-omit-frame-pointer -Wunused-function -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib
 
 //CC=clang
 //CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp=libiomp5 -g 
 -fsanitize=address -fno-omit-frame-pointer
 
-CC=/usr/bin/h5cc
-CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp 
+//CC=/usr/bin/h5cc
+/CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp
 
 endif
 
-LIBS=-lm -lgsl -lgslcblas -lsiloh5 -lfftw3 -lrt -lhdf5_serial
+#LIBS=-lm -lgsl -lgslcblas -lsiloh5 -lfftw3 -lrt -lhdf5_serial
+LIBS=-lm -lgsl -lgslcblas -lfftw3 -lrt -lsilo
 
 RM=/bin/rm
 OBJS = mpi.o u2prad.o magn.o silo.o postproc.o fileop.o misc.o physics.o finite.o problem.o metric.o relele.o rad.o opacities.o u2p.o frames.o p2u.o nonthermal.o 
 
-all: ko ana avg outavg phisli thsli phiavg regrid dumps2hdf5
+#all: ko ana avg outavg phisli thsli phiavg regrid dumps2hdf5
+all: ko ana avg outavg phisli thsli phiavg regrid
 
 ko: ko.o $(OBJS) Makefile ko.h problem.h mnemonics.h 
 	$(CC) $(CFLAGS) -o ko ko.o $(OBJS) $(LIBS)
