@@ -1,25 +1,32 @@
 #by default parallel, use 'make SERIAL=1' for serial
 
+#where you installed silo and gsl
+SILOPATH=/home/dabarca/silo-4.9.1-bsd/
+GSLPATH=/work/dabarca/apps/gsl-2.7/
+
 ifneq ($(SERIAL),1)
 CC=mpicc 
-CFLAGS=-O3 -DMPI -DNOSILO -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib
+CFLAGS=-O3 -DMPI -DNOSILO
+LIBS=-lm -lgsl -lgslcblas -lfftw3 -lrt
 
 
 else
 CC=gcc
-CFLAGS=-O3 -fopenmp -Wno-unused-result -fopenmp -fsanitize=address -g -fno-omit-frame-pointer -Wunused-function -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib
+#CFLAGS=-O3 -fopenmp -Wno-unused-result -fopenmp -fsanitize=address -g -fno-omit-frame-pointer -Wunused-function -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib
+#CFLAGS=-O3 -fopenmp -Wno-unused-result -fopenmp -fsanitize=address -g -fno-omit-frame-pointer -Wunused-function -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib -I/work/dabarca/apps/gsl-2.7/include -L/work/dabarca/apps/gsl-2.7/lib
+#CFLAGS=-O2 -fopenmp -I/work/dabarca/apps/gsl-2.7/include -L/work/dabarca/apps/gsl-2.7/lib -I/home/dabarca/silo-4.9.1-bsd/include -L/home/dabarca/silo-4.9.1-bsd/lib -Wl,-rpath,/work/dabarca/apps/gsl-2.7/lib
+CFLAGS=-O2 -fopenmp -I$(GSLPATH)include -L$(GSLPATH)lib -I$(SILOPATH)include -L$(SILOPATH)lib -Wl,-rpath,$(GSLPATH)lib
 
-//CC=clang
-//CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp=libiomp5 -g 
--fsanitize=address -fno-omit-frame-pointer
+#CC=clang
+#CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp=libiomp5 -g -fsanitize=address -fno-omit-frame-pointer
 
-//CC=/usr/bin/h5cc
-/CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp
+#CC=/usr/bin/h5cc
+#CFLAGS = -O2 -Wno-unused-result -I/usr/lib/gcc/x86_64-linux-gnu/5.4.0/include -I/usr/include/hdf5/serial -Wunused-function -fopenmp
 
+LIBS=-lm -lgsl -lgslcblas -lfftw3 -lrt -lsilo
 endif
 
 #LIBS=-lm -lgsl -lgslcblas -lsiloh5 -lfftw3 -lrt -lhdf5_serial
-LIBS=-lm -lgsl -lgslcblas -lfftw3 -lrt -lsilo
 
 RM=/bin/rm
 OBJS = mpi.o u2prad.o magn.o silo.o postproc.o fileop.o misc.o physics.o finite.o problem.o metric.o relele.o rad.o opacities.o u2p.o frames.o p2u.o nonthermal.o 
