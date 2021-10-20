@@ -143,13 +143,30 @@
 //140 RADSURVEY -- radiative parameter survey
 //141 KEPINF -- INFDISK modified for injecting keplerian 
 //142 PARTIALTDE -- INFDISK modified for partial TDE binding energy distribution non-constant
+//143 EASYBONDI -- an example bondi problem for koral workshop
 
 //ANDREW -- I've gone through problems 100-133 and undefined PR_KAPPA where appropriate
 //If you want to use default calc_opacities_from_state, make sure PR_KAPPA is  undefined!
 //if you are using a problem older than 100 with a different kappa defined in kappa.c
 //make sure your kappa.c ends with (kappa=(.....)) NOT (return kappa)!!
 
-#define PROBLEM 8
+#define PROBLEM 143
+
+#if(PROBLEM==143)
+
+#define PR_DEFINE "PROBLEMS/EASYBONDI/define.h"
+#define PR_BC "PROBLEMS/EASYBONDI/bc.c"
+//#define PR_BC_SPECIAL "PROBLEMS/EASYBONDI/bc_special.c"
+//#define PR_BC_SPECIAL_LOOP "PROBLEMS/EASYBONDI/loop_alloc_special.c"
+#define PR_INIT "PROBLEMS/EASYBONDI/init.c"
+//#define PR_KAPPA "PROBLEMS/KEPINF/kappa.c"
+#define PR_KAPPAES "PROBLEMS/EASYBONDI/kappaes.c"
+#define PR_OUT2GIF_2D "PROBLEMS/EASYBONDI/out2gif_2d.c"
+#define PR_OUT2GIF_1D "PROBLEMS/EASYBONDI/out2gif_1d.c"
+#define PR_DUMP "PROBLEMS/EASYBONDI/dump.c"
+#define PR_TOOLS "PROBLEMS/EASYBONDI/tools.c"
+
+#endif
 
 #if(PROBLEM==142)
 
