@@ -3,7 +3,7 @@ struct geometry geom;
 fill_geometry(ix, iy, iz, &geom);
 
 struct geometry geomBL;
-fill_geometry_arb(ix, iy, iz, &geom, BLCOORDS);
+fill_geometry_arb(ix, iy, iz, &geomBL, BLCOORDS);
 
 ldouble r, rho, rhocgs, uint;
 ldouble pp[NV], uu[NV];
