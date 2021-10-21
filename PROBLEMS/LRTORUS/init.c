@@ -20,7 +20,7 @@ uintorg=uint;
 
 if(rho<0.) //outside donut
   {
-    //ambient
+    //sets a background atmosphere
     set_hdatmosphere(pp,geom.xxvec,geom.gg,geom.GG,0);
 #ifdef RADIATION
     set_radatmosphere(pp,geom.xxvec,geom.gg,geom.GG,0);
@@ -48,12 +48,14 @@ if(rho<0.) //outside donut
     ldouble ult,ulph,ucov[4],ucon[4];
     ulph = sqrt(-1./(geomBL.GG[0][0]/ell/ell + 2./ell*geomBL.GG[0][3] + geomBL.GG[3][3]));
     ult = ulph / ell;
-
+    
+    // u_\mu
     ucov[0]=ult;
     ucov[1]=0.;
     ucov[2]=0.;
     ucov[3]=ulph;
     
+    //u^\mu
     indices_12(ucov,ucon,geomBL.GG);
 
 #ifdef PERTURBVEL
@@ -64,11 +66,11 @@ if(rho<0.) //outside donut
    
    
 
-    pp[0]=my_max(rho,ppback[0]); 
-    pp[1]=my_max(uint,ppback[1]);
-    pp[2]=ucon[1]; 
-    pp[3]=ucon[2];
-    pp[4]=ucon[3];
+    pp[RHO]=my_max(rho,ppback[0]); 
+    pp[UU]=my_max(uint,ppback[1]);
+    pp[VX]=ucon[1]; 
+    pp[VY]=ucon[2];
+    pp[VZ]=ucon[3];
 
 #ifdef MAGNFIELD//setting them zero not to break the following coordinate transformation
     pp[B1]=pp[B2]=pp[B3]=0.; 
@@ -78,6 +80,7 @@ if(rho<0.) //outside donut
 #ifdef RADIATION
     //distributing pressure
     ldouble P,aaa,bbb;
+    //pressure = (gamma-1)*uint
     P=GAMMAM1*uint;
     //solving for T satisfying P=pgas+prad=bbb T + aaa T^4
     aaa=4.*SIGMA_RAD/3.;
@@ -88,8 +91,10 @@ if(rho<0.) //outside donut
     E=calc_LTE_EfromT(T4);
     Fx=Fy=Fz=0.;
     uint=calc_PEQ_ufromTrho(T4,rho,ix,iy,iz);
-
+    
+    //new uint
     pp[UU]=my_max(uint,ppback[1]);
+    //radiation energy density
     pp[EE0]=my_max(E,ppback[EE0]);
 
 

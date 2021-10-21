@@ -7,17 +7,18 @@
 //restart
 /************************************/
 #define RESTART
-#define RESTARTNUM 30
+#define RESTARTGENERALINDICES
+#define RESTARTNUM -1
 
 /************************************/
 //radiation choices
 /************************************/
 #define RADIATION
 #ifdef RADIATION
-#define NO_COMPTONIZATION 
+//#define NO_COMPTONIZATION 
 //#define EVOLVEPHOTONNUMBER
 //#define RADIMPSTOPWHENFAIL
-#define RADIMP_START_WITH_BISECT
+//#define RADIMP_START_WITH_BISECT
 //#define BALANCEENTROPYWITHRADIATION
 #define ALLOWRADCEILINGINIMPLICIT
 #define ALLOWFORENTRINF4DPRIM
@@ -26,10 +27,10 @@
 //#define DAMPRADWAVESPEEDNEARAXIS
 //#define DAMPRADWAVESPEEDNEARAXISNCELLS 6
 //#define BASICRADIMPLICIT
-#define OPDAMPINIMPLICIT 1
+#define OPDAMPINIMPLICIT 0
 #define OPDAMPMAXLEVELS 3
 #define OPDAMPFACTOR 10.
-#define RADIMP_START_WITH_BISECT
+//#define RADIMP_START_WITH_BISECT
 //#define ALLOWRADCEILINGINIMPLICIT
 
 //#define RADIMPSTOPWHENFAIL
@@ -92,7 +93,7 @@
 #define MINMOD_THETA 1.5
 #define SHUFFLELOOPS 0
 #define DOFIXUPS 1
-#define DOU2PRADFIXUPS 1
+#define DOU2PRADFIXUPS 0
 #define DOU2PMHDFIXUPS 1
 #define DORADIMPFIXUPS 1
 
@@ -130,13 +131,13 @@
 //blackhole
 /************************************/
 #define MASS 10.
-#define BHSPIN 0.9
+#define BHSPIN 0.
 
 /************************************/
 //coordinates / resolution
 /************************************/
-//#define myMKS2COORDS
-#define myMKS3COORDS
+#define myMKS2COORDS
+//#define myMKS3COORDS
 #define ROUT 1000.
 #define MKSR0 0.
 #define MKSH0 0.6
@@ -169,13 +170,13 @@
 
 //total resolution
 
-#define TNX 160 //320 //16*17
+#define TNX 162 //320 //16*17
 #define TNY 160 //320 //16*12
 #define TNZ 1//32//128 //16*8
 
 //number of tiles
 
-#define NTX 8//32//16//32//16//17
+#define NTX 6//32//16//32//16//17
 #define NTY 8//32//16//32//8//12
 #define NTZ 1//2//8
 
@@ -188,12 +189,12 @@
 //output
 /************************************/
 //#define OUTPUTPERCORE
-#define OUTCOORDS KERRCOORDS                                                                    
+#define OUTCOORDS KERRCOORDS  
 #define OUTVEL VEL4
 #define ALLSTEPSOUTPUT 0
 //#define RADOUTPUTINZAMO
 #define NSTEPSTOP 1.e10
-#define NOUTSTOP 50 //5000
+#define NOUTSTOP 10000 //5000
 
 #define BOXOUTPUT 0
 #define BOXR1 15.
@@ -215,7 +216,7 @@
 #define AVGOUTPUT 0
 #define SILO2D_XZPLANE
 #define CBAUTOSCALE
-#define DTOUT1 100.
+#define DTOUT1 10.
 #define DTOUT2 1000.
 
 /************************************/
